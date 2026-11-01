@@ -56,3 +56,20 @@ Todos os testes são realizados em ambientes próprios ou autorizados.
 ---
 **Objetivo profissional:** conquistar minha primeira oportunidade em Segurança da Informação, com foco em SOC N1.
 
+---
+## Lab 01 - 01/11/2026 - health Check + Recon
+
+**Cenário:** VM com disco / em 90% (21G/25G)
+**Ações SOC L1:**
+- `sudo journalctl --vacuum-size=500M`- liberou 224MB
+- `minikube delete --all --purge`- liberou 3GB
+- Resultado: 70% (17G/25G) - 7.2G livres
+
+**Scan Nmap:**
+- `nmap -F localhost` -> 99 closed, 1 open 631/tcp CUPS 2.4
+- `ss -tulpn | grep 631` -> cupsd pid 1289 só em 127.0.0.1
+- Risco: Baixo
+
+**Análise de log:**
+- `grep -E Failed|Accepted /var/log/auth.log` -> 0 brute force
+- Falso positivo org.bluez VirtualBox
